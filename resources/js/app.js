@@ -8,8 +8,27 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import vuetify from './plugins/vuetify'
-import router from './plugins/router'
 
+import router from './router'
+import store from './store'
+import App from './components/App'
+
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      // this route requires auth, check if logged in
+      // if not, redirect to login page.
+      if (!store.getters.loggedIn) {
+        next({
+          name: 'login',
+        })
+      } else {
+        next()
+      }
+    } else {
+      next() // make sure to always call next()!
+    }
+  })
 // window.Vue = require('vue');
 
 // import Vuetify from 'vuetify';
@@ -26,8 +45,8 @@ import router from './plugins/router'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('home-com', require('./components/Home.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('home-com', require('./components/Home.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,6 +56,8 @@ Vue.component('home-com', require('./components/Home.vue').default);
 
 const app = new Vue({
     el: '#app',
-    vuetify,
-    router
+    components: { App },
+    router,
+    store,
+    vuetify
 });
