@@ -22,7 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::post('/login', 'AuthController@login');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
-Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
+Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
+
+//Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 
 Route::middleware('auth:api')->post('/test', function (Request $request) {
     return 'test ok';

@@ -1,5 +1,8 @@
 <template>
-  <h1 class="title">This is your Dashboard, you are logged in :)</h1>
+    <div>
+        <h1 class="title">This is your Dashboard, you are logged in :)</h1>
+        <v-btn rounded text color="primary" @click="logout">Logout</v-btn>
+    </div>
 </template>
 
 <script>
@@ -7,12 +10,12 @@ import {mapGetters} from 'vuex';
 export default {
     mounted(){
 
-        console.log(this.token);
+
         axios.post('/api/test', '', this.token )
 
             .then(res => {
 
-                console.log(res);
+
             })
             .catch(err => {
                 console.log(err);
@@ -24,5 +27,14 @@ export default {
             'token'
 		]),
     },
+     methods: {
+
+        logout() {
+            this.$store.dispatch("destroyToken").then(response => {
+            this.$router.push({ name: "wellcome" });
+            });
+        }
+
+    }
 }
 </script>

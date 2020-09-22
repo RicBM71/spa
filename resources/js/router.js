@@ -7,12 +7,18 @@ import NotFound from './components/NotFound'
 import Login from './components/Login'
 import Logout from './components/Logout'
 import Dashboard from './components/Dashboard'
+import Wellcome from './components/Wellcome'
 
 // Routes
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'is-active',
     routes: [
+        {
+            path: '/',
+            name: 'wellcome',
+            component: Wellcome,
+        },
         {
             path: '/login',
             name: 'login',
@@ -27,7 +33,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/',
+            path: '/dashboard',
             name: 'dashboard',
             component: Dashboard,
             meta: {
